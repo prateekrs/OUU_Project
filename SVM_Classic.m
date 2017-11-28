@@ -12,6 +12,7 @@ obj = e'*y;
 cons = [y>=0;y >= 1 - (2*labels-1).*(points*w - w0)];
 out = optimize(cons,obj,options);
 
+value(obj)
 w = double(w);
 w0 = double(w0);
 end
