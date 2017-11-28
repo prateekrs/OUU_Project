@@ -4,9 +4,10 @@ options = sdpsettings('verbose', 0, 'solver', 'mosek');
 [N,dims] = size(points);
 
 e = ones(N,1);
-S = [eye(N), -eye(N), eye(N), zeros(N,1);
-     zeros(1,N), e', e', 1 ];
-t = [labels;budget];
+S = [eye(N), -eye(N), eye(N), zeros(N), zeros(N,1);
+     eye(N), zeros(N), zeros(N),eye(N), zeros(N,1);
+     zeros(1,N), e', e', zeros(1,N), 1 ];
+t = [labels;ones(N,1);budget];
 
 q = e;
 K = length(t);
@@ -17,8 +18,8 @@ tc = [q;t];
 %-----VARIABLES-----
 w = sdpvar(dims,1);
 w0 = sdpvar();
-T = [-2*diag(points*w - w0), zeros(N,2*N+1);
-     zeros(N,3*N+1)];
+T = [-2*diag(points*w - w0), zeros(N,3*N+1);
+     zeros(N,4*N+1)];
 W = [eye(N);eye(N)];
 h = [1+ points*w - w0;zeros(N,1)];
 
@@ -26,7 +27,6 @@ h = [1+ points*w - w0;zeros(N,1)];
 Tc = [zeros(J) T'/2;T/2 zeros(I)];%size:I+J
 Sc = [zeros(L,J) W';S zeros(K,I)];
 
-x = sdpvar(N,1);
 hc = [zeros(J,1); h];
 psi = sdpvar(L+K,1);
 phi = sdpvar(L+K,1);
