@@ -36,7 +36,7 @@ budget = 2;
 [w_c,w0_c] = SVM_Classic(points,labels);
 
 [w_r,w0_r] = SVM_Robust(points,labels,budget);
-[w_r2,w0_r2] = SVM_Robust2(points,labels,budget);
+% [w_r2,w0_r2] = SVM_Robust2(points,labels,budget);
 
 hold on;
 p = points(labels==1,:);
@@ -51,8 +51,3 @@ scatter(x1,x2,'.k');
 x1 = linspace(0,1,100);
 x2 = (w0_r - w_r(1)*x1)/w_r(2);
 scatter(x1,x2,'.b');
-
-x1 = linspace(0,1,100);
-x2 = (w0_r2 - w_r2(1)*x1)/w_r2(2);
-scatter(x1,x2,'.g');
-% w_r,w0_r;
