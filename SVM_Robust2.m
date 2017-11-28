@@ -1,4 +1,4 @@
-function [w,w0] = SVM_Robust(points,labels,budget)
+function [obj,w,w0] = SVM_Robust2(points,labels,budget)
 options = sdpsettings('verbose', 0, 'solver', 'mosek');
 
 [N,dims] = size(points);
