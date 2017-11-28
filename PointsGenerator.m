@@ -13,14 +13,14 @@ r2 = mvnrnd(mu2,sigma2,sample_size2);
 
 
 points=[r1;r2];
-labels1=zeros(size(r1,1),1)
-labels2=ones(size(r2,1),1)
-labels2((r2(:,1)>=-2)+(r2(:,2)>=-2)==2)=1
-labels=[labels1;labels2]
+labels1=zeros(size(r1,1),1);
+labels2=ones(size(r2,1),1);
+labels2((r2(:,1)>=-2)+(r2(:,2)>=-2)==2)=1;
+labels=[labels1;labels2];
 
 hold on
-x=points(:,1)
-y=points(:,2)
+x=points(:,1);
+y=points(:,2);
 plot(x(labels==1),y(labels==1),'+')
 plot(x(labels==0),y(labels==0),'*')
 options = sdpsettings('verbose', 0, 'solver', 'mosek');
@@ -39,10 +39,10 @@ cons = [y>=0;y >= 1 - (2*labels-1).*(points*w - w0)];
 out = optimize(cons,obj,options);
 
 
-w0=value(w0)
-w1=value(w(1))
-w2=value(w(2))
+w0=value(w0);
+w1=value(w(1));
+w2=value(w(2));
 
-x=-5:0.1:5
-y=(w0-w1*x)/w2
+x=-5:0.1:5'
+y=(w0-w1*x)/w2;
 plot(x,y)
