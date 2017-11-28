@@ -22,8 +22,13 @@ r2 = mvnrnd(mu2,sigma2,sample_size2);
 points=[r1;r2];
 labels1=zeros(size(r1,1),1);
 labels2=ones(size(r2,1),1);
-labels2((r2(:,1)>=-2)+(r2(:,2)>=-2)==2)=1;
+labels2((r2(:,1)>=-2)+(r2(:,2)>=-2)==2)=0;
 labels=[labels1;labels2];
+hold on;
+x=points(:,1);
+y=points(:,2);
+plot(x(labels==1),y(labels==1),'+')
+plot(x(labels==0),y(labels==0),'*')
 
 budget = 2;
 
@@ -31,16 +36,16 @@ budget = 2;
 
 [w_r,w0_r] = SVM_Robust(points,labels,budget);
 
-hold on;
-p = points(labels==1,:);
-scatter(p(:,1),p(:,2),10,'r');
-p = points(labels==0,:);
-scatter(p(:,1),p(:,2),10,'b');
 
-x1 = linspace(0,1,100);
+% p = points(labels==1,:);
+% scatter(p(:,1),p(:,2),10,'r');
+% p = points(labels==0,:);
+% scatter(p(:,1),p(:,2),10,'b');
+
+x1 = linspace(-5,5,100);
 x2 = (w0_c - w_c(1)*x1)/w_c(2);
 scatter(x1,x2,'.k');
 
-x1 = linspace(0,1,100);
+x1 = linspace(-5,5,100);
 x2 = (w0_r - w_r(1)*x1)/w_r(2);
 scatter(x1,x2,'.g');
