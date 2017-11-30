@@ -1,0 +1,10 @@
+function [model] = create_master(points)
+model.
+N=size(points,1);
+tau=sdpvar();
+w=sdpvar(N,1)
+
+Obj=tau
+Constrain
+
+end

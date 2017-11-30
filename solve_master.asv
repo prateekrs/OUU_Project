@@ -1,0 +1,17 @@
+function [val_Z,val_r,sol,val_obj,val_q] = solve_master(model,options)
+val_obj=-1;
+val_q=-1;
+
+[model.N,model.K]=size(points);
+model.tau=sdpvar();
+model.w=sdpvar(model.K,1);
+model.w0=sdpvar();
+
+sol = optimize(model.Constraints,model.Objective,options);
+val_r=value(r);
+val_Z=value(Z);
+if sol.problem==0
+val_obj=value(Objective);
+val_q=value(q);
+end
+end
