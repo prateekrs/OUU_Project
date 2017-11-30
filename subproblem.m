@@ -1,4 +1,4 @@
-function [zi_val,z_val,y_val,sol] = subproblem(points,labels,w,w0,budget)
+function [zi_val,z_val,y_val,sol] = subproblem(points,labels,budget,w,w0)
 
 % implement your code here
 N=size(points,1); %number of points in dataset
