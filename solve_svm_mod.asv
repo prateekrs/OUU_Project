@@ -1,22 +1,22 @@
-mu2=[-2,-2]';sample_size1=50;
+sample_size1=50;
 sample_size2=50;
 
 
 mu1=[5,5]';
-sigma1=[1,0;0,1];
+sigma1=[2,0;0,2];
 r1 = mvnrnd(mu1,sigma1,sample_size1);
 
-
-sigma2=[1,0;0,1];
+mu2=[-5,-5]';
+sigma2=[2,0;0,2];
 r2 = mvnrnd(mu2,sigma2,sample_size2);
 points=[r1;r2];
 
-labels1=zeros(size(r1,1),1);
-labels2=ones(size(r2,1),1);
-labels2((r2(:,1)>=-2)+(r2(:,2)>=-2)==2)=0;
+labels1=ones(size(r1,1),1);
+labels2=zeros(size(r2,1),1);
+labels2((r2(:,1)>=-4)+(r2(:,2)>=-4)==2)=1;
 labels=[labels1;labels2];
 
-budget = 5;
+budget = 10;
 
 
 hold on;
@@ -27,15 +27,16 @@ plot(x(labels==0),y(labels==0),'*')
 
 %plot classic SVM classifier
 [w_c,w0_c] = SVM_Classic(points,labels);
-x1 = linspace(-5,5,100);
+x1 = linspace(-10,10,100);
 x2 = (w0_c - w_c(1)*x1)/w_c(2);
-scatter(x1,x2,'.r');
+plot(x1,x2,'--k');;
 
 %plot robust SVM classifier
 [w_r,w0_r] = SVM_Robust(points,labels,budget);
-x1 = linspace(-5,5,100);
+x1 = linspace(-15,15,100);
 x2 = (w0_r - w_r(1)*x1)/w_r(2);
-scatter(x1,x2,'.k');
+
+
 
 %plot worst case labels for robust SVM classifier
 [zi_val,z_val,y_val,sol]=subproblem(points,labels,w_r,w0_r,2)
@@ -52,6 +53,6 @@ plot(best_labels(:,1),best_labels(:,2),'o')
 
 %plot robust SVM classifier
 [w_benders,w0_benders] = SVM_Robust_Benders(points,labels,budget);
-x1 = linspace(-5,5,100);
+x1 = linspace(-10,10,100);
 x2 = (w0_benders - w_benders(1)*x1)/w_benders(2);
-scatter(x1,x2,'.g');
+plot(x1,x2,'--g');
